@@ -4,15 +4,15 @@ package monsters;
 //metoder samt en statisk hjälpmetod som genererar ett slumpmässigt monster
 
 import main.RandomHelper;
-
 import java.util.ArrayList;
 
-public class Monster implements IMonster {
+public abstract class Monster implements IMonster {
 
     private String name;
     private int hp;
     private int exp;
-    private static ArrayList<Monster> monsters = new ArrayList<Monster>();
+    private static ArrayList<IMonster> monsters = new ArrayList<>();
+    private RandomHelper r;
 
     //konstruktor
     public Monster(String name, int hp, int exp){
@@ -23,7 +23,7 @@ public class Monster implements IMonster {
 
     @Override
     public int attack() {
-        return 0;
+        return r.getInt(0,10);
     }
 
     @Override
@@ -58,19 +58,18 @@ public class Monster implements IMonster {
      * Returns a random monster from the ArrayList<Monster>
      * @return
      */
-    public static Monster getRandomMonster() {
+    public static IMonster getRandomMonster() {
         RandomHelper random = new RandomHelper();
-        //Ändra på basen av hur många monster du har tillsist!
-        int i = random.getInt(0, 0);
+        //Ändra på basis av hur många monster du har tillsist!
+        int i = random.getInt(0, 2);
         return monsters.get(i);
     }
 
     /**
-     * Add created monster to ArrayList<Monster>
+     * Add monster to ArrayList<IMonster>
      * @param m
      */
-    public void addMonsterToList(Monster m) {
-        GiantWurm gw = new GiantWurm("GiantWurm");
-        monsters.add(gw);
+    public void addMonsterToList(IMonster m) {
+        monsters.add(m);
     }
 }

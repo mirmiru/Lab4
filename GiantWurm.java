@@ -7,22 +7,28 @@ package monsters;
 public class GiantWurm extends Monster {
 
     //constructor
-    public GiantWurm(String name) {
-        super(name, 20, 5);
+    public GiantWurm() {
+        super("GiantWurm",20,5);
+        addMonsterToList(this);
     }
 
     @Override
     public int attack() {
-        return 0;
+        System.out.println("Sluuuurrrrp!");
+        return super.attack();
     }
 
     @Override
     public void takeDamage(int damage) {
+        super.takeDamage(damage);
     }
 
     @Override
     public boolean isDead() {
-        return false;
+        if (super.getHp() > 0)
+            return false;
+        else
+            return true;
     }
 
     @Override
@@ -32,11 +38,11 @@ public class GiantWurm extends Monster {
 
     @Override
     public int getHp() {
-        return 0;
+        return super.getHp();
     }
 
     @Override
     public int getExp() {
-        return 0;
+        return super.getExp();
     }
 }

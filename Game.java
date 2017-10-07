@@ -2,9 +2,7 @@ package main;
 
 import java.util.Scanner;
 
-import monsters.GiantWurm;
-import monsters.IMonster;
-import monsters.Monster;
+import monsters.*;
 
 public class Game {
 
@@ -32,7 +30,9 @@ public class Game {
 		// TODO create a new player using name,
 		// and assign to our instance variable!
 			Player player = new Player(name);
-		
+
+
+
 		System.out.println();
 		
 		int input = -1;
@@ -79,9 +79,13 @@ public class Game {
 	 */
 	private void goAdventure(Player player) {
 		if (r.getBigChance()) {
-			//generate random monster and user battle(monster)
-			System.out.println("Monster!");
+			//create all Monster objects - MOVE TO SEPARATE METHOD??
+			IMonster gw = new GiantWurm();
+			// TODO generate random monster and user battle(monster)
 
+			//TEST with giantwurm
+			battle(gw, player);
+			//battle(Monster.getRandomMonster());
 		} else {
 			System.out.println("You enjoy a nice peaceful walk.");
 		}
@@ -97,11 +101,40 @@ public class Game {
 	 * Initiates a battle between the player and the given monster
 	 * @param monster - the monster to fight
 	 */
-	private void battle(Monster monster) {
+	private void battle(IMonster monster, Player player) {
 		/* TODO
 		 * simulate a battle.
 		 * Must also handle all side effects, like death, leveling up to 10 and so on 
 		 */
+		//Battle
+		System.out.println("Oh no! A " + monster.getName() + " appeared!");
+		int damage;
+		do {
+			//Player attacks monster and deals damage to monster
+			damage = player.attack();
+			System.out.println("You swing at the monster, dealing " + damage + " damage!");
+			//Monster takes damage
+			monster.takeDamage(damage);
+
+			if (monster.isDead()) {
+				System.out.println("You killed the monster, gaining " + monster.getExp() + " experience!");
+				player.giveExp(monster.getExp());
+					if (player.getLevel() >= 10) {
+						wonGame();
+					}
+			} else {
+				damage = monster.attack();
+				System.out.println("The monster attacked you, dealing " + damage + " damage!");
+				player.takeDamage(damage);
+
+				if (player.isDead()) {
+					System.out.println("You were killed by the monster. :(");
+					System.out.println();
+				}
+			}
+		System.out.println(player.getName() + ": " + player.getHp() + " hp");
+		System.out.println(monster.getName() + ": " + monster.getHp() + " hp");
+		} while (!player.isDead() && !monster.isDead());
 	}
 	
 	/**

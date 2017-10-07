@@ -19,12 +19,18 @@ public class Player implements IPlayer {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     //Attack - player gives damage betw 0-10.
     @Override
     public int attack() {
+        System.out.println("Hiyaaaaaaa!");
+        /*
+        if (attackPower == 0) {
+            System.out.println(this.getName() + " missed, dealing 0 damage!");
+            return attackPower;
+        } else */
         return r.getInt(0,10);
     }
 
@@ -40,14 +46,13 @@ public class Player implements IPlayer {
         this.exp += newExp;
 
         if (this.exp >= 10) {
-            System.out.println("More than 10 exp points!");
+            System.out.println("More than 10 exp points! Time to level up!");
             this.level++;
             this.exp -= 10;
         }
         else {
             System.out.println("Less than 10 exp points.");
         }
-
     }
 
     @Override
